@@ -1,11 +1,49 @@
-<template lang="html">
-  <div>
-    hello
-  </div>
+<template>
+
+<div>
+  <header-bar></header-bar>
+  <h2>Welcome {{ userId }}</h2>
+  <el-button type="primary" @click="logout()">登出</el-button>
+  <footer-bar></footer-bar>
+</div>
+
 </template>
 
 <script>
+import HeaderBar from '@/components/public/HeaderBar'
+import FooterBar from '@/components/public/FooterBar'
+
 export default {
-  name: 'home'
+  name: 'Home',
+  data () {
+    return {
+      userId: ''
+    }
+  },
+  mounted () {
+    this.userId = localStorage.getItem('userId')
+  },
+  components: {
+    HeaderBar,
+    FooterBar
+  },
+  methods: {
+    logout () {
+      this.$store.dispatch('UserLogout')
+      if (!this.$store.state.token) {
+        this.$router.push('/login')
+        this.$message({
+          type: 'success',
+          message: '登出成功'
+        })
+      } else {
+        this.$message({
+          type: 'info',
+          message: '登出失败'
+        })
+      }
+    }
+  }
 }
+
 </script>

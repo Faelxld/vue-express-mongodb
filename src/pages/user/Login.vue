@@ -57,6 +57,7 @@
 <script>
 import HeaderBar from '@/components/public/HeaderBar'
 import FooterBar from '@/components/public/FooterBar'
+import api from '@/axios'
 
 export default {
   name: 'Login',
@@ -91,12 +92,10 @@ export default {
     submitForm (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          this.$ajax.post('/api/user/login', {
-            userId: this.ruleLogin.userId,
-            userPwd: this.ruleLogin.userPwd
-          })
-          .then((res) => {
-            const code = res.data.code
+          const opt = this.ruleLogin
+          api.UserLogin(opt).then(({data}) => {
+            console.log(data)
+            const code = data.code
             if (code === 50) {
               this.alert_type = 'error'
               this.$refs[formName].resetFields()
@@ -107,17 +106,26 @@ export default {
               }, 500)
             } else if (code === 200) {
               this.alert_type = 'success'
+
+              this.$store.dispatch('UserLogin', data.token)
+              this.$store.dispatch('UserId', data.userId)
+              const redirect = decodeURIComponent(this.$route.query.redirect || '/')
+              this.$router.push({
+                path: redirect
+              })
+              setTimeout(() => {
+                this.$router.push({
+                  path: 'home'
+                })
+              }, 1000)
             } else {
               this.alert_type = 'error'
             }
-            const msg = res.data.msg
-            const tip = res.data.tip
+            const msg = data.msg
+            const tip = data.tip
             this.alert_title = msg
             this.alert_description = tip
             this.is_show = true
-          })
-          .catch((err) => {
-            console.log(err)
           })
         } else {
           this.alert_type = 'error'

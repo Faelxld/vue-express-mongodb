@@ -11,7 +11,7 @@ export default {
   name: 'HeaderBar',
   data () {
     return {
-      title: 'Vue.js and Express and MySQL project'
+      title: 'Vue.js and Express and MongoDB project'
     }
   }
 }

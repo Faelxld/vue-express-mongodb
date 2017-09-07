@@ -5,6 +5,7 @@ const crypto = require('crypto') // md5 加密
 // 如果是 ajax.post 必须写
 
 const model = require('../config/db.js')
+const createToken = require('../middleware/createToken.js')
 
 const jsonWrite = (res, ret) => {
   if (typeof ret === 'undefined') {
@@ -19,7 +20,7 @@ const jsonWrite = (res, ret) => {
 
 router.post('/useradd', (req, res, next) => {
   const params = req.body
-  console.log(params)
+
   const id = params.userId
   const pwd = params.userPwd
   const md5 = crypto.createHash('md5')
@@ -28,7 +29,8 @@ router.post('/useradd', (req, res, next) => {
 
   const user = new model.User({
     userId: id,
-    userPwd: password
+    userPwd: password,
+    token: createToken(id)
   })
 
   model.User.findOne({
@@ -67,7 +69,7 @@ router.post('/useradd', (req, res, next) => {
 
 router.post('/login', (req, res, next) => {
   const params = req.body
-  console.log(params)
+
   const id = params.userId
   const pwd = params.userPwd
   const md5 = crypto.createHash('md5')
@@ -76,7 +78,8 @@ router.post('/login', (req, res, next) => {
 
   const user = new model.User({
     userId: id,
-    userPwd: password
+    userPwd: password,
+    token: createToken(id)
   })
 
   model.User.findOne({
@@ -93,6 +96,8 @@ router.post('/login', (req, res, next) => {
     } else if (user.userPwd === doc.userPwd) {
       const result = {
         code: 200,
+        userId: doc.userId,
+        token: createToken(id),
         msg: 'Success! Welcome to join us',
         tip: 'Welcome to join us ...'
       }

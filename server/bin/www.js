@@ -8,6 +8,7 @@ const app = express()
 
 const userApi = require('../router/userApi')
 
+
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({

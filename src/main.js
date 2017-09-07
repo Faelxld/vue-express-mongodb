@@ -7,6 +7,8 @@ import router from './router'
 import axios from 'axios'
 Vue.prototype.$ajax = axios
 
+import store from './store'
+
 import 'base-flex/dist/base.min.css'
 import 'element-ui/lib/theme-default/index.css'
 import './font.less'
@@ -21,6 +23,7 @@ Vue.config.productionTip = false
 new Vue({
   el: '#app',
   router,
+  store,
   template: '<App/>',
   components: {
     App
