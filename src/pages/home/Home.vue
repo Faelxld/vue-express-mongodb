@@ -1,17 +1,16 @@
 <template>
-
 <div>
   <header-bar></header-bar>
   <h2>Welcome {{ userId }}</h2>
   <el-button type="primary" @click="logout()">登出</el-button>
   <footer-bar></footer-bar>
 </div>
-
 </template>
 
 <script>
 import HeaderBar from '@/components/public/HeaderBar'
 import FooterBar from '@/components/public/FooterBar'
+import api from '@/axios'
 
 export default {
   name: 'Home',
@@ -20,8 +19,15 @@ export default {
       userId: ''
     }
   },
-  mounted () {
-    this.userId = localStorage.getItem('userId')
+  created () {
+    api.GetUser().then(({data}) => {
+      if (data.code === 401) {
+        this.$router.push('/login')
+        this.$store.dispatch('UserLogout')
+      } else {
+        this.userId = sessionStorage.getItem('userId')
+      }
+    })
   },
   components: {
     HeaderBar,
@@ -45,5 +51,4 @@ export default {
     }
   }
 }
-
 </script>

@@ -6,13 +6,11 @@ export default {
   }, data) {
     commit(types.LOGIN, data)
   },
-
   UserLogout ({
     commit
   }) {
     commit(types.LOGOUT)
   },
-
   UserId ({
     commit
   }, data) {

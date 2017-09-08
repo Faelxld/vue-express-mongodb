@@ -2,7 +2,9 @@ const mongoose = require('mongoose')
 mongoose.connect('mongodb://127.0.0.1/test')
 const db = mongoose.connection
 mongoose.Promise = global.Promise
-db.on('error', console.error.bind(console, 'Connect error'))
+db.on('error', function () {
+  console.log('Connect error')
+})
 db.once('open', function () {
   console.log('Mongodb started successfully')
 })
@@ -18,6 +20,10 @@ const userSchema = mongoose.Schema({
   },
   token: {
     type: String,
+    required: true
+  },
+  create_time: {
+    type: Date,
     required: true
   }
 })

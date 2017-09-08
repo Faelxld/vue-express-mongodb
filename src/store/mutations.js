@@ -3,7 +3,7 @@ import * as types from './types'
 const mutations = {
   [types.LOGIN]: (state, data) => {
     try {
-      localStorage.setItem('token', data)
+      sessionStorage.setItem('token', data)
       state.token = data
     } catch (err) {
       console.log(err)
@@ -11,7 +11,7 @@ const mutations = {
   },
   [types.LOGOUT]: (state) => {
     try {
-      localStorage.removeItem('token')
+      sessionStorage.removeItem('token')
       state.token = null
     } catch (err) {
       console.log(err)
@@ -19,7 +19,7 @@ const mutations = {
   },
   [types.USERID]: (state, data) => {
     try {
-      localStorage.setItem('userId', data)
+      sessionStorage.setItem('userId', data)
       state.userId = data
     } catch (err) {
       console.log(err)

@@ -1,76 +1,65 @@
 <template lang="html">
-  <div>
-    <header-bar></header-bar>
 
-    <div class="form">
-      <el-form
-        :model="ruleRegister"
-        :rules="rules"
-        ref="ruleRegister">
-        <h1 class="text-center">{{ module_name }}</h1>
+<div>
+  <header-bar></header-bar>
 
-        <el-form-item prop="userId">
-          <el-input
-            type="text"
-            v-model.number="ruleRegister.userId"
-            name="userId"
-            auto-complete="off"
-            icon="fa-user"
-            placeholder="Enter your ID">
-            </el-input>
-        </el-form-item>
+  <div class="form">
+    <el-form :model="ruleRegister" :rules="rules" ref="ruleRegister">
+      <h1 class="text-center">{{ module_name }}</h1>
 
-        <el-form-item prop="userPwd">
-          <el-input
-            type="password"
-            v-model="ruleRegister.userPwd"
-            name="userPwd"
-            auto-complete="off"
-            icon="fa-key"
-            placeholder="Enter your password">
-            </el-input>
-        </el-form-item>
+      <el-form-item prop="userId">
+        <el-input type="text" v-model.number="ruleRegister.userId" name="userId" auto-complete="off" icon="fa-user" placeholder="Enter your ID">
+          </el-input>
+      </el-form-item>
 
-        <el-form-item prop="check_pwd">
-          <el-input
-            type="password"
-            v-model="ruleRegister.check_pwd"
-            name="check_pwd"
-            auto-complete="off"
-            icon="fa-key"
-            placeholder="Enter your password again">
-            </el-input>
-        </el-form-item>
+      <el-form-item prop="userPwd">
+        <el-input type="password" v-model="ruleRegister.userPwd" name="userPwd" auto-complete="off" icon="fa-key" placeholder="Enter your password">
+          </el-input>
+      </el-form-item>
 
-        <el-form-item>
-          <el-button class="but-faild" type="primary" @click="submitForm('ruleRegister')">{{ module_name }}</el-button>
-        </el-form-item>
+      <el-form-item prop="check_pwd">
+        <el-input type="password" v-model="ruleRegister.check_pwd" name="check_pwd" auto-complete="off" icon="fa-key" placeholder="Enter your password again">
+          </el-input>
+      </el-form-item>
 
-        <el-alert
-          :title="alert_title"
-          :type="alert_type"
-          :description="alert_description"
-          show-icon
-          v-if="is_show">
+      <el-form-item>
+        <el-button class="but-faild" type="primary" @click="submitForm('ruleRegister')">{{ module_name }}</el-button>
+      </el-form-item>
+
+      <el-alert :title="alert_title" :type="alert_type" :description="alert_description" show-icon v-if="is_show">
         </el-alert>
 
-        <el-form-item class="text-right">
-          <router-link to="login">Login&nbsp&nbsp<i class="el-icon-d-arrow-right"></i></router-link>
-        </el-form-item>
-      </el-form>
-    </div>
-
-    <footer-bar></footer-bar>
+      <el-form-item class="text-right">
+        <router-link to="login">Login&nbsp&nbsp<i class="el-icon-d-arrow-right"></i></router-link>
+      </el-form-item>
+    </el-form>
   </div>
+
+  <footer-bar></footer-bar>
+</div>
+
 </template>
 
 <script>
 import HeaderBar from '@/components/public/HeaderBar'
 import FooterBar from '@/components/public/FooterBar'
+import api from '@/axios'
 
 export default {
   name: 'Register',
   data () {
+    const validateId = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error('Plase enter your ID'))
+      } else {
+        let reg = /^([0-9]){9}$/
+        if (!reg.test(this.ruleRegister.userId)) {
+          callback(new Error('9 digit; ID is numbers'))
+        } else {
+          callback()
+        }
+      }
+    }
     const validatePass = (rule, value, callback) => {
       if (value === '') {
         callback(new Error('Plase enter your password'))
@@ -107,8 +96,7 @@ export default {
       },
       rules: {
         userId: [
-          { required: true, message: 'Plase enter your ID' },
-          { type: 'number', min: 9, message: '9 digit; ID is numbers', trigger: ' blur' }
+          { validator: validateId, trigger: ' blur' }
         ],
         userPwd: [
           { validator: validatePass, trigger: ' blur' }
@@ -127,13 +115,11 @@ export default {
     submitForm (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          this.$ajax.post('/api/user/useradd', {
-            userId: this.ruleRegister.userId,
-            userPwd: this.ruleRegister.userPwd
-          })
-          .then((res) => {
-            console.log(res)
-            const code = res.data.code
+          const opt = this.ruleRegister
+          api.UserAdd(opt).then(({
+            data
+          }) => {
+            const code = data.code
             if (code === 50) {
               this.alert_type = 'error'
               this.$refs[formName].resetFields()
@@ -153,13 +139,12 @@ export default {
             } else {
               this.alert_type = 'error'
             }
-            const msg = res.data.msg
-            const tip = res.data.tip
+            const msg = data.msg
+            const tip = data.tip
             this.alert_title = msg
             this.alert_description = tip
             this.is_show = true
-          })
-          .catch((err) => {
+          }).catch((err) => {
             console.log(err)
           })
         } else {

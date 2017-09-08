@@ -4,9 +4,6 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 
-import axios from 'axios'
-Vue.prototype.$ajax = axios
-
 import store from './store'
 
 import 'base-flex/dist/base.min.css'

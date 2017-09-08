@@ -1,40 +1,40 @@
 import axios from 'axios'
 import store from '../store'
-import * as types from '../store/types'
 import router from '../router'
 
-// axios 配置
-axios.default.timeout = 5000
-axios.defaults.headers.post['Content-Type'] = 'application/json'
+// 设置全局axios默认值
+axios.defaults.timeout = 5000 // 5000的超时验证
+axios.defaults.headers.post['Content-Type'] = 'application/jsoncharset=UTF-8'
 
+// 创建一个axios实例
 const instance = axios.create()
-instance.defaults.headers.post['Content-Type'] = 'application/json'
+instance.defaults.headers.post['Content-Type'] = 'application/jsoncharset=UTF-8'
 
 axios.interceptors.request.use = instance.interceptors.request.use
 
 // http request 拦截器
-axios.interceptors.request.use(
+instance.interceptors.request.use(
   config => {
-    if (localStorage.getItem('token')) {
-      config.headers.Authorization = `token ${localStorage.getItem('token')}`
-        .replace(/(^")|("$)/g, '')
+    if (store.state.token) {
+      config.headers.Authorization = `token ${store.state.token}`.replace(/(^")|("$)/g, '')
     }
     return config
   },
-  err => {
-    return Promise.reject(err)
+  error => {
+    return Promise.reject(error)
   })
 
 // http response 拦截器
-axios.interceptors.response.use(
+instance.interceptors.response.use(
   response => {
     return response
   },
   error => {
+    // return Promise.reject(error)
     if (error.response) {
       switch (error.response.status) {
         case 401:
-          store.commit(types.LOGOUT)
+          store.dispatch('UserLogout')
           router.replace({
             path: 'login',
             query: {
@@ -43,7 +43,7 @@ axios.interceptors.response.use(
           })
       }
     }
-    return Promise.reject(error.response.data)
+    return Promise.reject(error.response)
   })
 
 export default {
@@ -54,5 +54,9 @@ export default {
   // 用户登录
   UserLogin (data) {
     return instance.post('/api/user/login', data)
+  },
+  // 获取用户
+  GetUser () {
+    return instance.get('/api/user/getuser')
   }
 }

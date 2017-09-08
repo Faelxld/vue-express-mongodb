@@ -74,12 +74,10 @@ export default {
       },
       rules: {
         userId: [
-          { required: true, message: 'Plase enter your ID' },
-          { type: 'number', min: 9, message: '9 digit; ID is numbers', trigger: ' blur' }
+          { required: true, message: 'Plase enter your ID' }
         ],
         userPwd: [
-          { required: true, message: 'Plase enter your password', trigger: 'blur' },
-          { min: 8, max: 20, message: 'Your password length is error', trigger: 'blur' }
+          { required: true, message: 'Plase enter your password', trigger: 'blur' }
         ]
       }
     }
@@ -93,40 +91,42 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           const opt = this.ruleLogin
-          api.UserLogin(opt).then(({data}) => {
-            console.log(data)
-            const code = data.code
-            if (code === 50) {
-              this.alert_type = 'error'
-              this.$refs[formName].resetFields()
-              setTimeout(() => {
-                this.$router.push({
-                  path: 'reg'
-                })
-              }, 500)
-            } else if (code === 200) {
-              this.alert_type = 'success'
+          api.UserLogin(opt)
+            .then(({
+              data
+            }) => {
+              const code = data.code
+              if (code === 50) {
+                this.alert_type = 'error'
+                this.$refs[formName].resetFields()
+                setTimeout(() => {
+                  this.$router.push({
+                    path: 'reg'
+                  })
+                }, 500)
+              } else if (code === 200) {
+                this.alert_type = 'success'
+                this.$store.dispatch('UserLogin', data.token)
+                this.$store.dispatch('UserId', data.userId)
+                const redirect = decodeURIComponent(this.$route.query.redirect || '/home')
 
-              this.$store.dispatch('UserLogin', data.token)
-              this.$store.dispatch('UserId', data.userId)
-              const redirect = decodeURIComponent(this.$route.query.redirect || '/')
-              this.$router.push({
-                path: redirect
-              })
-              setTimeout(() => {
-                this.$router.push({
-                  path: 'home'
-                })
-              }, 1000)
-            } else {
-              this.alert_type = 'error'
-            }
-            const msg = data.msg
-            const tip = data.tip
-            this.alert_title = msg
-            this.alert_description = tip
-            this.is_show = true
-          })
+                setTimeout(() => {
+                  this.$router.push({
+                    path: redirect
+                  })
+                }, 1000)
+              } else {
+                this.alert_type = 'error'
+              }
+              const msg = data.msg
+              const tip = data.tip
+              this.alert_title = msg
+              this.alert_description = tip
+              this.is_show = true
+            })
+            .catch((err) => {
+              console.log(err)
+            })
         } else {
           this.alert_type = 'error'
           this.alert_title = 'Error Submit'

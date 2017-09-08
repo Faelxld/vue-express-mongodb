@@ -6,18 +6,37 @@
 
 - [x] find user
 - [x] add user
-- [ ] token validate
+- [x] token validate
+- [x] login intercept
 
 # Technology
 
 - [x] vue
 - [x] vue-router
-- [ ] vuex
+- [x] vuex
 - [x] express
 - [x] mongodb
 - [x] less/scss
 - [x] axios
 - [x] ElementUI
+
+# demo
+
+## Login and Register successfully
+
+![vue-express-mongodb](https://github.com/vxhly/vue-express-mongodb/tree/master/static/vue-express-mongodb-1.gif)
+
+## Token validate
+
+![vue-express-mongodb](https://github.com/vxhly/vue-express-mongodb/tree/master/static/vue-express-mongodb-2.gif)
+
+## Register validate
+
+![vue-express-mongodb](https://github.com/vxhly/vue-express-mongodb/tree/master/static/vue-express-mongodb-3.gif)
+
+## Login validate
+
+![vue-express-mongodb](https://github.com/vxhly/vue-express-mongodb/tree/master/static/vue-express-mongodb-4.gif)
 
 ## Build Setup
 
