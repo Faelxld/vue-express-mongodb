@@ -2,6 +2,12 @@
 
 > Vue.js and Express and MongoDB project
 
+# Thanks
+
+- [vue-login](https://github.com/ykloveyxk/vue-login)
+- [vue-koa2-login](https://github.com/sinner77/vue-koa2-login)
+- [vue-axios-github](https://github.com/superman66/vue-axios-github)
+
 # Function
 
 - [x] find user
@@ -20,35 +26,70 @@
 - [x] axios
 - [x] ElementUI
 
+# API
+
+- `/api/user/useradd`
+- `/api/user/login`
+- `/api/user/getuser`
+
+# Schema
+
+```javascript
+const userSchema = mongoose.Schema({
+  userId: {
+    type: Number,
+    required: true
+  },
+  userPwd: {
+    type: String,
+    required: true
+  },
+  token: {
+    type: String,
+    required: true
+  },
+  create_time: {
+    type: Date,
+    required: true
+  }
+})
+```
+
 # demo
 
-## Login and Register successfully
+## start server
 
 ![vue-express-mongodb](https://github.com/vxhly/vue-express-mongodb/blob/master/static/vue-express-mongodb-1.gif)
 
-## Token validate
+## Login and Register successfully
 
 ![vue-express-mongodb](https://github.com/vxhly/vue-express-mongodb/blob/master/static/vue-express-mongodb-2.gif)
 
-## Register validate
+## Token validate
 
 ![vue-express-mongodb](https://github.com/vxhly/vue-express-mongodb/blob/master/static/vue-express-mongodb-3.gif)
 
-## Login validate
+## Register validate
 
 ![vue-express-mongodb](https://github.com/vxhly/vue-express-mongodb/blob/master/static/vue-express-mongodb-4.gif)
 
-## Build Setup
+## Login validate
+
+![vue-express-mongodb](https://github.com/vxhly/vue-express-mongodb/blob/master/static/vue-express-mongodb-5.gif)
+
+# Build Setup
 
 ```bash
 # install dependencies
 npm install
 
-# serve with hot reload at localhost:8080
-npm run dev
-
-# run express server
+# run express server，this should be the first execution
+# the server api run on localhost:3000
 npm run server
+
+# serve with hot reload at localhost:8080
+# [HPM] Proxy created: /api  ->  http://127.0.0.1:3000/api/
+npm run dev
 
 # build for production with minification
 npm run build
