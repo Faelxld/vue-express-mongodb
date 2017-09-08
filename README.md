@@ -24,19 +24,19 @@
 
 ## Login and Register successfully
 
-[vue-express-mongodb](https://github.com/vxhly/vue-express-mongodb/tree/master/static/vue-express-mongodb-1.gif)
+![vue-express-mongodb](https://github.com/vxhly/vue-express-mongodb/blob/master/static/vue-express-mongodb-1.gif)
 
 ## Token validate
 
-[vue-express-mongodb](https://github.com/vxhly/vue-express-mongodb/tree/master/static/vue-express-mongodb-2.gif)
+![vue-express-mongodb](https://github.com/vxhly/vue-express-mongodb/tree/master/static/vue-express-mongodb-2.gif)
 
 ## Register validate
 
-[vue-express-mongodb](https://github.com/vxhly/vue-express-mongodb/tree/master/static/vue-express-mongodb-3.gif)
+![vue-express-mongodb](https://github.com/vxhly/vue-express-mongodb/tree/master/static/vue-express-mongodb-3.gif)
 
 ## Login validate
 
-[vue-express-mongodb](https://github.com/vxhly/vue-express-mongodb/tree/master/static/vue-express-mongodb-4.gif)
+![vue-express-mongodb](https://github.com/vxhly/vue-express-mongodb/tree/master/static/vue-express-mongodb-4.gif)
 
 ## Build Setup
 
