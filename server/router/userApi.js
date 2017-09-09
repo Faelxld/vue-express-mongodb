@@ -137,6 +137,4 @@ router.get('/getuser', checkToken, (req, res, next) => {
   })
 })
 
-router.get('/deluser', checkToken, (req, res, next) => {})
-
 module.exports = router
