@@ -1,6 +1,6 @@
 {
   "name": "vue-express-mongodb",
-  "version": "1.8.2",
+  "version": "1.8.6",
   "description": "Vue.js and Express and MongoDB project",
   "author": "'vxhly' <'904334946@qq.com'>",
   "private": true,

@@ -10,7 +10,6 @@
 <script>
 import HeaderBar from '@/components/public/HeaderBar'
 import FooterBar from '@/components/public/FooterBar'
-import api from '@/axios'
 
 export default {
   name: 'Home',
@@ -20,7 +19,7 @@ export default {
     }
   },
   created () {
-    api.GetUser().then(({data}) => {
+    this.$api.GetUser().then(({data}) => {
       if (data.code === 401) {
         this.$router.push('/login')
         this.$store.dispatch('UserLogout')

@@ -57,7 +57,6 @@
 <script>
 import HeaderBar from '@/components/public/HeaderBar'
 import FooterBar from '@/components/public/FooterBar'
-import api from '@/axios'
 
 export default {
   name: 'Login',
@@ -91,7 +90,7 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           const opt = this.ruleLogin
-          api.UserLogin(opt)
+          this.$api.UserLogin(opt)
             .then(({
               data
             }) => {

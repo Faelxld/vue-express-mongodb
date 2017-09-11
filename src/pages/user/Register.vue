@@ -43,7 +43,6 @@
 <script>
 import HeaderBar from '@/components/public/HeaderBar'
 import FooterBar from '@/components/public/FooterBar'
-import api from '@/axios'
 
 export default {
   name: 'Register',
@@ -116,7 +115,7 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           const opt = this.ruleRegister
-          api.UserAdd(opt).then(({
+          this.$api.UserAdd(opt).then(({
             data
           }) => {
             const code = data.code

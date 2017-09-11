@@ -5,6 +5,8 @@ import App from './App'
 import router from './router'
 
 import store from './store'
+import api from './axios'
+Vue.prototype.$api = api
 
 import 'base-flex/dist/base.min.css'
 import 'element-ui/lib/theme-default/index.css'
