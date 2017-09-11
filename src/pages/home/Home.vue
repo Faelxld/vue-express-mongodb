@@ -19,14 +19,18 @@ export default {
     }
   },
   created () {
-    this.$api.GetUser().then(({data}) => {
-      if (data.code === 401) {
-        this.$router.push('/login')
-        this.$store.dispatch('UserLogout')
-      } else {
-        this.userId = sessionStorage.getItem('userId')
-      }
-    })
+    this.$api.GetUser()
+      .then(({data}) => {
+        if (data.code === 401) {
+          this.$router.push('/login')
+          this.$store.dispatch('UserLogout')
+        } else {
+          this.userId = sessionStorage.getItem('userId')
+        }
+      })
+      .catch((err) => {
+        console.log(err)
+      })
   },
   components: {
     HeaderBar,

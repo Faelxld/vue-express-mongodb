@@ -115,37 +115,36 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           const opt = this.ruleRegister
-          this.$api.UserAdd(opt).then(({
-            data
-          }) => {
-            const code = data.code
-            if (code === 50) {
-              this.alert_type = 'error'
-              this.$refs[formName].resetFields()
-              setTimeout(() => {
-                this.$router.push({
-                  path: 'login'
-                })
-              }, 500)
-            } else if (code === 200) {
-              this.alert_type = 'success'
-              this.$refs[formName].resetFields()
-              setTimeout(() => {
-                this.$router.push({
-                  path: 'login'
-                })
-              }, 500)
-            } else {
-              this.alert_type = 'error'
-            }
-            const msg = data.msg
-            const tip = data.tip
-            this.alert_title = msg
-            this.alert_description = tip
-            this.is_show = true
-          }).catch((err) => {
-            console.log(err)
-          })
+          this.$api.UserAdd(opt)
+            .then(({data}) => {
+              const code = data.code
+              if (code === 50) {
+                this.alert_type = 'error'
+                this.$refs[formName].resetFields()
+                setTimeout(() => {
+                  this.$router.push({
+                    path: 'login'
+                  })
+                }, 500)
+              } else if (code === 200) {
+                this.alert_type = 'success'
+                this.$refs[formName].resetFields()
+                setTimeout(() => {
+                  this.$router.push({
+                    path: 'login'
+                  })
+                }, 500)
+              } else {
+                this.alert_type = 'error'
+              }
+              const msg = data.msg
+              const tip = data.tip
+              this.alert_title = msg
+              this.alert_description = tip
+              this.is_show = true
+            }).catch((err) => {
+              console.log(err)
+            })
         } else {
           this.alert_type = 'error'
           this.alert_title = 'Error Submit'

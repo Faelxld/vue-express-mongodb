@@ -91,9 +91,7 @@ export default {
         if (valid) {
           const opt = this.ruleLogin
           this.$api.UserLogin(opt)
-            .then(({
-              data
-            }) => {
+            .then(({data}) => {
               const code = data.code
               if (code === 50) {
                 this.alert_type = 'error'
